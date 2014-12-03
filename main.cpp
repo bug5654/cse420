@@ -34,7 +34,7 @@ static float colors[5][3];
 static int activeshape = 0;
 static int answer[4];
 static int rotate_amt=0;
-static bool victory=FALSE;
+static bool victory=false;
 
 
 //All the stuff for bitmaps
