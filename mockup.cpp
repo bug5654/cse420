@@ -23,7 +23,10 @@ static int currshape;
 
 static void init (void)
 {
+   //glMatrixMode(GL_PROJECTION);
+   
    glClearColor(1.0,1.0,1.0,0.0);
+   glLoadIdentity();
    currshape=0;
    spin=0;
    spiny=0;
@@ -98,9 +101,10 @@ static void init (void)
       glVertex3f (1.0, 0.0, 1.0);
       glEnd();
    glEndList ();
-   shapes[1] = glGenLists (1);
    
-   //cube = glGenLists (1);
+   
+   
+   shapes[1] = glGenLists (1);
    glNewList (shapes[1], GL_COMPILE); //cube
       glBegin (GL_POLYGON);   //bottom
       glVertex3f (0.0, 0.0, 0.0);
@@ -195,8 +199,181 @@ static void init (void)
       glVertex3f (0.0, 0.0, 1.0);
       glVertex3f (0.0, 1.0, 1.0);
       glEnd();
-      
    glEndList ();
+   
+   shapes[2] = glGenLists (1);
+   glNewList (shapes[2], GL_COMPILE); //L-tetris
+      glBegin (GL_QUADS);   //frontq1
+      glVertex3f (0.0, 0.0, 0.0);
+      glVertex3f (1.0, 0.0, 0.0);
+      glVertex3f (1.0, 0.5, 0.0);
+      glVertex3f (0.0, 0.5, 0.0);
+      glEnd ();
+      glBegin (GL_QUADS);   //frontq2
+      glVertex3f (0.5, 0.5, 0.0);
+      glVertex3f (0.5, 1.0, 0.0);
+      glVertex3f (1.0, 1.0, 0.0);
+      glVertex3f (1.0, 0.5, 0.0);
+      glEnd ();
+      glBegin (GL_QUADS);   //rearq1
+      glVertex3f (0.0, 0.0, 1.0);
+      glVertex3f (1.0, 0.0, 1.0);
+      glVertex3f (1.0, 0.5, 1.0);
+      glVertex3f (0.0, 0.5, 1.0);
+      glEnd ();
+      glBegin (GL_QUADS);   //rearq2
+      glVertex3f (0.5, 0.5, 1.0);
+      glVertex3f (0.5, 1.0, 1.0);
+      glVertex3f (1.0, 1.0, 1.0);
+      glVertex3f (1.0, 0.5, 1.0);
+      glEnd ();
+      
+      glBegin (GL_POLYGON);   //right
+      glVertex3f (1.0, 0.0, 0.0);
+      glVertex3f (1.0, 0.0, 1.0);
+      glVertex3f (1.0, 1.0, 1.0);
+      glVertex3f (1.0, 1.0, 0.0);
+      glEnd ();
+      glBegin (GL_POLYGON);   //topright
+      glVertex3f (0.5, 1.0, 0.0);
+      glVertex3f (1.0, 1.0, 0.0);
+      glVertex3f (1.0, 1.0, 1.0);
+      glVertex3f (0.5, 1.0, 1.0);
+      glEnd ();
+      glBegin (GL_POLYGON);   //topleft
+      glVertex3f (0.0, 0.5, 0.0);
+      glVertex3f (0.5, 0.5, 0.0);
+      glVertex3f (0.5, 0.5, 1.0);
+      glVertex3f (0.0, 0.5, 1.0);
+      glEnd ();
+      glBegin (GL_POLYGON);   //righttop
+      glVertex3f (0.5, 0.5, 0.0);
+      glVertex3f (0.5, 0.5, 1.0);
+      glVertex3f (0.5, 1.0, 1.0);
+      glVertex3f (0.5, 1.0, 0.0);
+      glEnd ();
+      glBegin (GL_POLYGON);   //rightbot
+      glVertex3f (0.0, 0.0, 0.0);
+      glVertex3f (0.0, 0.5, 0.0);
+      glVertex3f (0.0, 0.5, 1.0);
+      glVertex3f (0.0, 0.0, 1.0);
+      glEnd ();
+      glBegin (GL_POLYGON);   //bottom
+      glVertex3f (0.0, 0.0, 0.0);
+      glVertex3f (1.0, 0.0, 0.0);
+      glVertex3f (1.0, 0.0, 1.0);
+      glVertex3f (0.0, 0.0, 1.0);
+      glEnd ();
+      
+      glColor3f(0.0,0.0,0.0); //lines
+      glBegin(GL_LINES);   //front
+      glVertex3f (0.0, 0.0, 0.0);
+      glVertex3f (1.0, 0.0, 0.0);
+      glEnd();
+      glBegin(GL_LINES);   
+      glVertex3f (1.0, 0.0, 0.0);
+      glVertex3f (1.0, 1.0, 0.0);
+      glEnd();
+      glBegin(GL_LINES);
+      glVertex3f (1.0, 1.0, 0.0);
+      glVertex3f (0.5, 1.0, 0.0);
+      glEnd();
+      glBegin(GL_LINES);
+      glVertex3f (0.5, 0.5, 0.0);
+      glVertex3f (0.5, 1.0, 0.0);
+      glEnd();
+      glBegin(GL_LINES);
+      glVertex3f (0.5, 0.5, 0.0);
+      glVertex3f (0.0, 0.5, 0.0);
+      glEnd();
+      glBegin(GL_LINES);
+      glVertex3f (0.0, 0.5, 0.0);
+      glVertex3f (0.0, 0.0, 0.0);
+      glEnd();
+      glBegin(GL_LINES);   //rear
+      glVertex3f (0.0, 0.0, 1.0);
+      glVertex3f (1.0, 0.0, 1.0);
+      glEnd();
+      glBegin(GL_LINES);   
+      glVertex3f (1.0, 0.0, 1.0);
+      glVertex3f (1.0, 1.0, 1.0);
+      glEnd();
+      glBegin(GL_LINES);
+      glVertex3f (1.0, 1.0, 1.0);
+      glVertex3f (0.5, 1.0, 1.0);
+      glEnd();
+      glBegin(GL_LINES);
+      glVertex3f (0.5, 0.5, 1.0);
+      glVertex3f (0.5, 1.0, 1.0);
+      glEnd();
+      glBegin(GL_LINES);
+      glVertex3f (0.5, 0.5, 1.0);
+      glVertex3f (0.0, 0.5, 1.0);
+      glEnd();
+      glBegin(GL_LINES);
+      glVertex3f (0.0, 0.5, 1.0);
+      glVertex3f (0.0, 0.0, 1.0);
+      glEnd();
+      glBegin(GL_LINES);//right
+      glVertex3f (1.0, 0.0, 0.0);
+      glVertex3f (1.0, 0.0, 1.0);
+      glEnd();
+      glBegin(GL_LINES);
+      glVertex3f (1.0, 1.0, 1.0);
+      glVertex3f (1.0, 0.0, 1.0);
+      glEnd();
+      glBegin(GL_LINES);
+      glVertex3f (1.0, 1.0, 1.0);
+      glVertex3f (1.0, 1.0, 0.0);
+      glEnd();
+      glBegin(GL_LINES);   //topleft
+      glVertex3f (1.0, 1.0, 1.0);
+      glVertex3f (0.5, 1.0, 1.0);
+      glEnd();
+      glBegin(GL_LINES);   
+      glVertex3f (1.0, 1.0, 1.0);
+      glVertex3f (0.5, 1.0, 1.0);
+      glEnd();
+      glBegin(GL_LINES);   
+      glVertex3f (0.5, 1.0, 1.0);
+      glVertex3f (0.5, 1.0, 0.0);
+      glEnd();
+      /*glBegin(GL_LINES);   
+      glVertex3f (0.5, 1.0, 1.0);
+      glVertex3f (0.0, 1.0, 1.0);
+      glEnd(); //wrong*/
+      /*glBegin(GL_LINES);   //toproght
+      glVertex3f (0.5, 1.0, 1.0);
+      glVertex3f (0.0, 1.0, 1.0);
+      glEnd();//*/
+      /*glBegin(GL_LINES);   
+      glVertex3f (0.0, 1.0, 1.0);
+      glVertex3f (0.0, 1.0, 0.0);
+      glEnd();//*/
+      glBegin(GL_LINES);   //last
+      glVertex3f (0.0, 0.0, 0.0);
+      glVertex3f (0.0, 0.0, 1.0);
+      glEnd();
+
+      glBegin(GL_LINES);   //fix
+      glVertex3f (0.0, 0.5, 0.0);
+      glVertex3f (0.0, 0.5, 1.0);
+      glEnd();
+      glBegin(GL_LINES);   //fix2
+      glVertex3f (0.5, 0.5, 0.0);
+      glVertex3f (0.5, 0.5, 1.0);
+      glEnd();
+
+   glEndList ();
+   
+   
+   shapes[3] = glGenLists (1);
+   glNewList (shapes[3], GL_COMPILE); //T-Tetris
+   
+   
+   
+   
+   
    glShadeModel (GL_SMOOTH);
 }
 
@@ -206,11 +383,12 @@ void display(void)
 {
    GLuint i;
    
-   
+   glLoadIdentity();
    glClear (GL_COLOR_BUFFER_BIT);
    glColor3f (0.0, 1.0, 0.0);  /*  current color green  */
    glPushMatrix();
-   gluLookAt(0.0,0.0,-5.0,0.0,0.0,0.0,0.0,1.0,0.0);
+   gluLookAt(0.0,0.0,-100.0,0.0,0.0,0.0,0.0,1.0,0.0);
+   //gluPerspective(60,1.0,0.0,20);
    glPopMatrix();
    glPushMatrix();
    glRotatef(spin,0.5,0.5,0.5);
@@ -282,12 +460,12 @@ void keyboard(unsigned char key, int x, int y)
          break;
       case 't':
          currshape-=1;
-         if(currshape<0) { currshape=1; }
+         if(currshape<0) { currshape=2; }
          glutPostRedisplay();
          break; 
       case 'T':
          currshape+=1;
-         if(currshape>1) { currshape=0; }
+         if(currshape>2) { currshape=0; }
          glutPostRedisplay();
          break;    
                
