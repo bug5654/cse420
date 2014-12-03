@@ -14,8 +14,8 @@
 using namespace std;
 
 static int shapes[4];
-static int pyramid;
-static int cube;
+/*static int pyramid;
+static int cube;*/
 static int guesses[5][4];
 static int spin;
 static int spiny;

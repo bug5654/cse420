@@ -1,5 +1,7 @@
 g++ mockup.cpp -framework OpenGL -framework GLUT -o mockup
 
+g++ main.cpp -framework OpenGL -framework GLUT -o main
+
 
 
 #ifdef __APPLE__

@@ -1,19 +1,24 @@
+#ifdef __APPLE__
+#include <GLUT/glut.h>
+
+#include <OpenGL/gl.h>
+#else
+#include <GL/glut.h>
+#include <GL/glu.h>
+#include <GL/gl.h>
+#endif
+
+#define WINDOWS_FLAGG
+#ifndef WINDOWS_FLAGG
 #include <GL/GL.h>
 #include <GL/GLU.h>
 #include <GL/glut.h>
+#endif
 #include <stdlib.h>
 #include <string.h>
 
-static int shapeScore = 0, correctScore = 0,
-		   shapeScore2 = 0, correctScore2 = 0,
-		   shapeScore3 = 0, correctScore3 = 0,
-		   shapeScore4 = 0, correctScore4 = 0,
-		   shapeScore5 = 0, correctScore5 = 0,
-		   shapeScore6 = 0, correctScore6 = 0,
-		   shapeScore7 = 0, correctScore7 = 0,
-		   shapeScore8 = 0, correctScore8 = 0,
-		   shapeScore9 = 0, correctScore9 = 0,
-		   shapeScore10 = 0, correctScore10 = 0;
+static int shapeScore[10];
+static int  correctScore[10];
 static int guesses = 0;
 
 //All the stuff for bitmaps
@@ -73,8 +78,12 @@ GLuint tally;
 void init(void)
 {
 	tally = glGenLists(1);
+	for(int i=0; i<10;i++) {
+	  shapeScore[i]=0;
+	  correctScore[i]=0;
+   }
 	glNewList(tally, GL_COMPILE);
-		glColor3f(0.0, 0.0, 0.0);
+		glColor3f(1.0, 1.0, 1.0);
 		glBegin(GL_POLYGON);
 		glVertex2f(0.0, 0.0);
 		glVertex2f(0.0, 10.0);
@@ -98,8 +107,8 @@ void printString(char *s)
 
 void instructions(void)
 {
-	GLfloat black[3] = { 0.0, 0.0, 0.0 };
-	glClearColor(0.5, 0.5, 0.5, 0.0);
+	GLfloat black[3] = { 1.0, 1.0, 1.0 };
+	glClearColor(0.0, 0.0, 0.0, 0.0);
 
 	glClear(GL_COLOR_BUFFER_BIT);
 
@@ -125,12 +134,16 @@ void score(GLint a, GLint b)
 {
 	
 	glPushMatrix();
-	for (int i = 0; i < a; i++)
+	int maxa = a;
+	int maxb = b;
+	if (a>4) { maxa=4; }
+	if (b>4) { maxb=4; }
+	for (int i = 0; i < maxa; i++)
 	{
 		glCallList(tally);
 	}
 	glTranslatef(130 - (10 * a), 0, 0);
-	for (int i = 0; i < b; i++)
+	for (int i = 0; i < maxb; i++)
 	{
 		glCallList(tally);
 	}
@@ -141,7 +154,7 @@ void score(GLint a, GLint b)
 
 void scoreboard(void)
 {
-	GLfloat black[3] = { 0.0, 0.0, 0.0 };
+	GLfloat black[3] = { 1.0, 1.0, 1.0 };
 	//glClearColor(0.5, 0.5, 0.5, 0.0);
 
 	//glClear(GL_COLOR_BUFFER_BIT);
@@ -157,13 +170,13 @@ void scoreboard(void)
 
 void playarea(void)
 {
-	glColor3f(0.0, 0.0, 0.0);
+	/*glColor3f(0.0, 0.0, 0.0);
 	glBegin(GL_QUADS);
 		glVertex2f(0.0, 0.0);
 		glVertex2f(0, 500);
 		glVertex2f(650, 500);
 		glVertex2f(650, 0);
-		glEnd();
+		glEnd();*/
 	/*glBegin(GL_LINE);
 	glVertex2f(0.0, 0.0);
 	glVertex2f(0.0, 500.0);
@@ -184,53 +197,10 @@ void display(void)
 	glPushMatrix();
 	glTranslatef(20, 450, 0);
 	int tallytranslate = -40;
-		if (guesses >= 0)
-			score((GLint)shapeScore, (GLint)correctScore);
-		if (guesses >= 1)
-		{
-			glTranslatef(0, tallytranslate, 0);
-			score((GLint)shapeScore2, (GLint)correctScore2);
-		}
-		if (guesses >= 2)
-		{
-			glTranslatef(0, tallytranslate, 0);
-			score((GLint)shapeScore3, (GLint)correctScore3);
-		}
-		if (guesses >= 3)
-		{
-			glTranslatef(0, tallytranslate, 0);
-			score((GLint)shapeScore4, (GLint)correctScore4);
-		}
-		if (guesses >= 4)
-		{
-			glTranslatef(0, tallytranslate, 0);
-			score((GLint)shapeScore5, (GLint)correctScore5);
-		}
-		if (guesses >= 5)
-		{
-			glTranslatef(0, tallytranslate, 0);
-			score((GLint)shapeScore6, (GLint)correctScore6);
-		}
-		if (guesses >= 6)
-		{
-			glTranslatef(0, tallytranslate, 0);
-			score((GLint)shapeScore7, (GLint)correctScore7);
-		}
-		if (guesses >= 7)
-		{
-			glTranslatef(0, tallytranslate, 0);
-			score((GLint)shapeScore8, (GLint)correctScore8);
-		}
-		if (guesses >= 8)
-		{
-			glTranslatef(0, tallytranslate, 0);
-			score((GLint)shapeScore9, (GLint)correctScore9);
-		}
-		if (guesses >= 9)
-		{
-			glTranslatef(0, tallytranslate, 0);
-			score((GLint)shapeScore10, (GLint)correctScore10);
-		}
+	   for(int j=guesses; j < (2*guesses)+1; j++) {
+	        score( (GLint)shapeScore[j-guesses], (GLint) correctScore[j-guesses]);
+	        glTranslatef(0, tallytranslate, 0);
+	   }
 	glPopMatrix();
 	glPopMatrix();
 	glutSwapBuffers();
@@ -250,49 +220,11 @@ void keyboard(unsigned char key, int x, int y)
 {
 	switch (key) {
 	case 's':
-		if (guesses == 0)
-			shapeScore = (shapeScore + 1);
-		if (guesses == 1)
-			shapeScore2 += 1;
-		if (guesses == 2)
-			shapeScore3 += 1;
-		if (guesses == 3)
-			shapeScore4 += 1;
-		if (guesses == 4)
-			shapeScore5 += 1;
-		if (guesses == 5)
-			shapeScore6 += 1;
-		if (guesses == 6)
-			shapeScore7 += 1;
-		if (guesses == 7)
-			shapeScore8 += 1;
-		if (guesses == 8)
-			shapeScore9 += 1;
-		if (guesses == 9)
-			shapeScore10 += 1;
+	   shapeScore[guesses]+=1;
 		glutPostRedisplay();
 		break;
 	case 'w':
-		if (guesses == 0)
-			correctScore += 1;
-		if (guesses == 1)
-			correctScore2 += 1;
-		if (guesses == 2)
-			correctScore3 += 1;
-		if (guesses == 3)
-			correctScore4 += 1;
-		if (guesses == 4)
-			correctScore5 += 1;
-		if (guesses == 5)
-			correctScore6 += 1;
-		if (guesses == 6)
-			correctScore7 += 1;
-		if (guesses == 7)
-			correctScore8 += 1;
-		if (guesses == 8)
-			correctScore9 += 1;
-		if (guesses == 9)
-			correctScore10 += 1;
+      correctScore[guesses] += 1;
 		glutPostRedisplay();
 		break;
 	case 'A':
@@ -304,6 +236,9 @@ void keyboard(unsigned char key, int x, int y)
 	case 'G':
 	case 'g':
 		guesses += 1;
+		if (guesses>9) {
+		    guesses=0;
+		 }
 		glutPostRedisplay();
 		break;
 	case 27:
