@@ -373,24 +373,24 @@ static void init (void)
       glBegin (GL_QUADS);   //frontq1
       glVertex3f (0.0, 0.0, 0.0);
       glVertex3f (1.0, 0.0, 0.0);
-      glVertex3f (1.0, 0.5, 0.0);
-      glVertex3f (0.0, 0.5, 0.0);
+      glVertex3f (1.0, 0.33, 0.0);
+      glVertex3f (0.0, 0.33, 0.0);
       glEnd ();
       glBegin (GL_QUADS);   //frontq2
-      glVertex3f (0.33, 0.5, 0.0);
-      glVertex3f (0.66, 0.5, 0.0);
+      glVertex3f (0.33, 0.33, 0.0);
+      glVertex3f (0.66, 0.33, 0.0);
       glVertex3f (0.66, 1.0, 0.0);
       glVertex3f (0.33, 1.0, 0.0);
       glEnd ();
       glBegin (GL_QUADS);   //frontq1
       glVertex3f (0.0, 0.0, 1.0);
       glVertex3f (1.0, 0.0, 1.0);
-      glVertex3f (1.0, 0.5, 1.0);
-      glVertex3f (0.0, 0.5, 1.0);
+      glVertex3f (1.0, 0.33, 1.0);
+      glVertex3f (0.0, 0.33, 1.0);
       glEnd ();
       glBegin (GL_QUADS);   //frontq2
-      glVertex3f (0.33, 0.5, 1.0);
-      glVertex3f (0.66, 0.5, 1.0);
+      glVertex3f (0.33, 0.33, 1.0);
+      glVertex3f (0.66, 0.33, 1.0);
       glVertex3f (0.66, 1.0, 1.0);
       glVertex3f (0.33, 1.0, 1.0);
       glEnd ();
@@ -402,21 +402,21 @@ static void init (void)
       glEnd ();
       glBegin (GL_QUADS);   //rightbot
       glVertex3f (1.0, 0.0, 0.0);
-      glVertex3f (1.0, 0.5, 0.0);
-      glVertex3f (1.0, 0.5, 1.0);
+      glVertex3f (1.0, 0.33, 0.0);
+      glVertex3f (1.0, 0.33, 1.0);
       glVertex3f (1.0, 0.0, 1.0);
       glEnd ();
       glBegin (GL_QUADS);   //righttop
-      glVertex3f (1.0, 0.5, 0.0);
-      glVertex3f (1.0, 1.0, 0.0);
-      glVertex3f (1.0, 1.0, 1.0);
-      glVertex3f (1.0, 0.5, 1.0);
+      glVertex3f (1.0, 0.33, 0.0);
+      glVertex3f (1.0, 0.33, 1.0);
+      glVertex3f (0.66, 0.33, 1.0);
+      glVertex3f (0.66, 0.33, 0.0);
       glEnd ();
       glBegin (GL_QUADS);   //topright
-      glVertex3f (1.0, 0.5, 0.0);
-      glVertex3f (1.0, 0.5, 1.0);
-      glVertex3f (0.66, 0.5, 1.0);
-      glVertex3f (0.66, 0.5, 0.0);
+      glVertex3f (1.0, 0.33, 0.0);
+      glVertex3f (1.0, 0.33, 1.0);
+      glVertex3f (0.66, 0.33, 1.0);
+      glVertex3f (0.66, 0.33, 0.0);
       glEnd ();
       glBegin (GL_QUADS);   //topmid
       glVertex3f (0.66, 1.0, 0.0);
@@ -425,25 +425,122 @@ static void init (void)
       glVertex3f (0.33, 1.0, 0.0);
       glEnd ();
       glBegin (GL_QUADS);   //topleft
-      glVertex3f (0.33, 0.5, 0.0);
-      glVertex3f (0.33, 0.5, 1.0);
-      glVertex3f (0.0, 0.5, 1.0);
-      glVertex3f (0.0, 0.5, 0.0);
+      glVertex3f (0.33, 0.33, 0.0);
+      glVertex3f (0.33, 0.33, 1.0);
+      glVertex3f (0.0, 0.33, 1.0);
+      glVertex3f (0.0, 0.33, 0.0);
       glEnd ();
       glBegin (GL_QUADS);   //righttop
-      glVertex3f (0.33, 0.5, 0.0);
+      glVertex3f (0.33, 0.33, 0.0);
       glVertex3f (0.33, 1.0, 0.0);
       glVertex3f (0.33, 1.0, 1.0);
-      glVertex3f (0.33, 0.5, 1.0);
+      glVertex3f (0.33, 0.33, 1.0);
       glEnd ();
       glBegin (GL_QUADS);   //rightbot
       glVertex3f (0.0, 0.0, 0.0);
-      glVertex3f (0.0, 0.5, 0.0);
-      glVertex3f (0.0, 0.5, 1.0);
+      glVertex3f (0.0, 0.33, 0.0);
+      glVertex3f (0.0, 0.33, 1.0);
       glVertex3f (0.0, 0.0, 1.0);
       glEnd ();
 
-   
+      glColor3f(0.0,0.0,0.0); //lines
+      glBegin(GL_LINES);   //front
+      glVertex3f (0.0, 0.0, 0.0);
+      glVertex3f (1.0, 0.0, 0.0);
+      glEnd();
+      glBegin(GL_LINES);
+      glVertex3f (1.0, 0.0, 0.0);
+      glVertex3f (1.0, 0.33, 0.0);
+      glEnd();
+      glBegin(GL_LINES);
+      glVertex3f (0.66, 0.33, 0.0);
+      glVertex3f (1.0, 0.33, 0.0);
+      glEnd();
+      glBegin(GL_LINES);
+      glVertex3f (0.66, 0.33, 0.0);
+      glVertex3f (0.66, 1.0, 0.0);
+      glEnd();
+      glBegin(GL_LINES);
+      glVertex3f (0.33, 1.0, 0.0);
+      glVertex3f (0.66, 1.0, 0.0);
+      glEnd();
+      glBegin(GL_LINES);
+      glVertex3f (0.33, 1.0, 0.0);
+      glVertex3f (0.33, 0.33, 0.0);
+      glEnd();
+      glBegin(GL_LINES);
+      glVertex3f (0.0, 0.33, 0.0);
+      glVertex3f (0.33, 0.33, 0.0);
+      glEnd();
+      glBegin(GL_LINES);
+      glVertex3f (0.0, 0.33, 0.0);
+      glVertex3f (0.0, 0.0, 0.0);
+      glEnd();
+      glBegin(GL_LINES);//leftbot
+      glVertex3f (0.0, 0.0, 0.0);
+      glVertex3f (0.0, 0.0, 1.0);
+      glEnd();
+      glBegin(GL_LINES);
+      glVertex3f (0.0, 0.33, 1.0);
+      glVertex3f (0.0, 0.0, 1.0);
+      glEnd();
+      glBegin(GL_LINES);
+      glVertex3f (0.0, 0.33, 1.0);
+      glVertex3f (0.0, 0.33, 0.0);
+      glEnd();
+      glBegin(GL_LINES);//topleft
+      glVertex3f (0.0, 0.33, 1.0);
+      glVertex3f (0.33, 0.33, 1.0);
+      glEnd();
+      glBegin(GL_LINES);
+      glVertex3f (0.33, 0.33, 0.0);
+      glVertex3f (0.33, 0.33, 1.0);
+      glEnd();
+      glBegin(GL_LINES);
+      glVertex3f (0.33, 1.0, 1.0);
+      glVertex3f (0.33, 0.33, 1.0);
+      glEnd();
+      glBegin(GL_LINES);
+      glVertex3f (0.33, 1.0, 1.0);
+      glVertex3f (0.33, 1.0, 0.0);
+      glEnd();
+      glBegin(GL_LINES);//topmid
+      glVertex3f (0.33, 1.0, 1.0);
+      glVertex3f (0.66, 1.0, 1.0);
+      glEnd();
+      glBegin(GL_LINES);
+      glVertex3f (0.66, 1.0, 1.0);
+      glVertex3f (0.66, 1.0, 0.0);
+      glEnd();
+      glBegin(GL_LINES);
+      glVertex3f (0.66, 1.0, 1.0);
+      glVertex3f (0.66, 0.33, 1.0);
+      glEnd();
+      glBegin(GL_LINES);
+      glVertex3f (0.66, 0.33, 0.0);
+      glVertex3f (0.66, 0.33, 1.0);
+      glEnd();
+      glBegin(GL_LINES);//topleft
+      glVertex3f (0.66, 0.33, 1.0);
+      glVertex3f (1.0, 0.33, 1.0);
+      glEnd();
+      glBegin(GL_LINES);
+      glVertex3f (1.0, 0.33, 0.0);
+      glVertex3f (1.0, 0.33, 1.0);
+      glEnd();
+      glBegin(GL_LINES);
+      glVertex3f (1.0, 0.0, 1.0);
+      glVertex3f (1.0, 0.33, 1.0);
+      glEnd();
+      glBegin(GL_LINES);
+      glVertex3f (1.0, 0.0, 1.0);
+      glVertex3f (1.0, 0.0, 0.0);
+      glEnd();
+      glBegin(GL_LINES);//back
+      glVertex3f (0.0, 0.0, 1.0);
+      glVertex3f (1.0, 0.0, 1.0);
+      glEnd();
+      
    
    
    glEndList ();
