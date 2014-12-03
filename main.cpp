@@ -34,6 +34,7 @@ static float colors[5][3];
 static int activeshape = 0;
 static int answer[4];
 static int rotate_amt=0;
+static bool victory=FALSE;
 
 
 //All the stuff for bitmaps
@@ -104,7 +105,7 @@ void resetgame() {
    }
    for(int q=0;q<4;q++) {
       answer[q] = floor(rand()%4);
-      cout << "answer[" << q << "]: " << answer[q];
+      cout << "\nanswer[" << q << "]: " << answer[q];
    }
    
 }
@@ -245,7 +246,7 @@ void playarea(void)
 }
 
 void drawshapes() {
-   cout << "\ndrawshapes called!\n";
+   //cout << "\ndrawshapes called!\n";
    int drawshape = currguess+1;
    if(drawshape >9) { drawshape=9; }
    glPushMatrix();
@@ -390,6 +391,7 @@ void scoreupdate(void)
 
 void keyboard(unsigned char key, int x, int y)
 {
+   
 	switch (key) {
 	case 's':
 	case 'S':
