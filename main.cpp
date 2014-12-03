@@ -19,6 +19,7 @@
 #include <iostream>
 #include "shapes.cpp"
 #include <math.h>
+#include <time.h>
 
 
 
@@ -112,8 +113,9 @@ void resetgame() {
    for(int j=0; j<4; j++) {      //init for first guess
 	     guesses[0][j]=0;
    }
+   srand(time(NULL));
    for(int q=0;q<4;q++) {
-      answer[q] = floor(rand()%4);
+      answer[q] = floor(rand()%4); //better random number gen can be used here
       
    }
    array_echo(answer, 4, "answer");
@@ -299,11 +301,12 @@ void drawshapes() {
             glPopMatrix();
          }
          glTranslatef(3,0,0);
+         
       }
       glTranslatef(-12,-2,0);  //next line
       if(victory==true && firstvictory==0) {
          glPushMatrix();
-         glTranslatef(-1.0,-1,0);
+         glTranslatef(-1,4,0);
          glColor3f(0.2,1.0,0.2);
          glBegin(GL_QUADS);
             glVertex3f(0.0,0.0,0.0);
