@@ -171,14 +171,16 @@ void instructions(void)
 	glRasterPos2i(20, 480);
 	printString("WELCOME TO MASTERMIND");
 	glRasterPos2i(20, 460);
-	printString("A AND D TO SELECT A SHAPE");
+	printString("A AND D TO CHANGE SELECTION");
 	glRasterPos2i(20, 440);
-	printString("'G' TO CONFRIM YOUR SHAPE");
+	printString("W AND S TO CHANGE SHAPE");
 	glRasterPos2i(20, 420);
-	printString("YOU HAVE TEN currguess TO GET");
+	printString("'G' TO CONFIRM YOUR SHAPE");
 	glRasterPos2i(20, 400);
-	printString("THE SHAPES IN THE RIGHT LOCATION");
+	printString("YOU HAVE FIVE GUESSES TO GET");
 	glRasterPos2i(20, 380);
+	printString("THE SHAPES IN THE RIGHT LOCATION");
+	glRasterPos2i(20, 360);
 	printString("GOOD LUCK");
 	glFlush();
 }
