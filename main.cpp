@@ -4,6 +4,18 @@
 #include <stdlib.h>
 #include <string.h>
 
+static int shapeScore = 0, correctScore = 0,
+		   shapeScore2 = 0, correctScore2 = 0,
+		   shapeScore3 = 0, correctScore3 = 0,
+		   shapeScore4 = 0, correctScore4 = 0,
+		   shapeScore5 = 0, correctScore5 = 0,
+		   shapeScore6 = 0, correctScore6 = 0,
+		   shapeScore7 = 0, correctScore7 = 0,
+		   shapeScore8 = 0, correctScore8 = 0,
+		   shapeScore9 = 0, correctScore9 = 0,
+		   shapeScore10 = 0, correctScore10 = 0;
+static int guesses = 0;
+
 //All the stuff for bitmaps
 GLubyte space[] =
 { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
@@ -66,8 +78,8 @@ void init(void)
 		glBegin(GL_POLYGON);
 		glVertex2f(0.0, 0.0);
 		glVertex2f(0.0, 10.0);
-		glVertex2f(3.0, 0.0);
 		glVertex2f(3.0, 10.0);
+		glVertex2f(3.0, 0.0);
 		glEnd();
 		glTranslatef(10.0, 0.0, 0.0);
 	glEndList();
@@ -109,7 +121,7 @@ void instructions(void)
 }
 
 
-void score(int a, int b)
+void score(GLint a, GLint b)
 {
 	
 	glPushMatrix();
@@ -117,7 +129,7 @@ void score(int a, int b)
 	{
 		glCallList(tally);
 	}
-	glTranslatef(110, 0, 0);
+	glTranslatef(130 - (10 * a), 0, 0);
 	for (int i = 0; i < b; i++)
 	{
 		glCallList(tally);
@@ -143,7 +155,7 @@ void scoreboard(void)
 	glFlush();
 }
 
-void drawline(void)
+void playarea(void)
 {
 	glColor3f(0.0, 0.0, 0.0);
 	glBegin(GL_QUADS);
@@ -160,69 +172,66 @@ void drawline(void)
 
 void display(void)
 {
-	/*
-	int w = 800;
-	int h = 500;
-	for (int i = 0; i < 3; i++)
-	{
-		if (i == 0)
-		{
-			glViewport(0, h, w / 6, h);
-			glMatrixMode(GL_PROJECTION);
-			glLoadIdentity();
-			gluOrtho2D(0, w / 6, h, 0);
-		}
-		if (i == 1)
-		{
-			glViewport(0, h, 2*w/3, h);
-			glMatrixMode(GL_PROJECTION);
-			glLoadIdentity();
-			gluOrtho2D(0, 2 * w / 3, h, 0);
-		}
-		if (i == 2)
-		{
-			glViewport(0, h, w / 6, h);
-			glMatrixMode(GL_PROJECTION);
-			glLoadIdentity();
-			gluOrtho2D(0, w / 6, h, 0);
-		}
-
-		glMatrixMode(GL_MODELVIEW);
-		glLoadIdentity();
-		glClear(GL_DEPTH_BUFFER_BIT);
-
-		if (i == 0)
-		{
-			instructions();
-		}
-		if (i == 1)
-		{
-			
-		}
-		if (i == 2)
-		{
-			glPushMatrix();
-			scoreboard();
-			glPushMatrix();
-			glTranslatef(20, 450, 0);
-			score(2, 5);
-			glPopMatrix();
-		}
-	}
-	*/
 	glPushMatrix();
 	instructions();
 	glPushMatrix();
 	glTranslatef(300, 0, 0);
-	drawline();
+	playarea();
 	//glPushMatrix();
 	glTranslatef(660, 0, 0);
 	scoreboard();
 	glPushMatrix();
 	glTranslatef(20, 450, 0);
-	score(2, 5);
+		if (guesses >= 0)
+			score((GLint)shapeScore, (GLint)correctScore);
+		if (guesses >= 1)
+		{
+			glTranslatef(0, -20, 0);
+			score((GLint)shapeScore2, (GLint)correctScore2);
+		}
+		if (guesses >= 2)
+		{
+			glTranslatef(0, -20, 0);
+			score((GLint)shapeScore3, (GLint)correctScore3);
+		}
+		if (guesses >= 3)
+		{
+			glTranslatef(0, -20, 0);
+			score((GLint)shapeScore4, (GLint)correctScore4);
+		}
+		if (guesses >= 4)
+		{
+			glTranslatef(0, -20, 0);
+			score((GLint)shapeScore5, (GLint)correctScore5);
+		}
+		if (guesses >= 5)
+		{
+			glTranslatef(0, -20, 0);
+			score((GLint)shapeScore6, (GLint)correctScore6);
+		}
+		if (guesses >= 6)
+		{
+			glTranslatef(0, -20, 0);
+			score((GLint)shapeScore7, (GLint)correctScore7);
+		}
+		if (guesses >= 7)
+		{
+			glTranslatef(0, -20, 0);
+			score((GLint)shapeScore8, (GLint)correctScore8);
+		}
+		if (guesses >= 8)
+		{
+			glTranslatef(0, -20, 0);
+			score((GLint)shapeScore9, (GLint)correctScore9);
+		}
+		if (guesses >= 9)
+		{
+			glTranslatef(0, -20, 0);
+			score((GLint)shapeScore10, (GLint)correctScore10);
+		}
 	glPopMatrix();
 	glPopMatrix();
+	glutSwapBuffers();
 }
 
 void reshape(int w, int h)
@@ -238,6 +247,62 @@ void reshape(int w, int h)
 void keyboard(unsigned char key, int x, int y)
 {
 	switch (key) {
+	case 's':
+		if (guesses == 0)
+			shapeScore = (shapeScore + 1);
+		if (guesses == 1)
+			shapeScore2 += 1;
+		if (guesses == 2)
+			shapeScore3 += 1;
+		if (guesses == 3)
+			shapeScore4 += 1;
+		if (guesses == 4)
+			shapeScore5 += 1;
+		if (guesses == 5)
+			shapeScore6 += 1;
+		if (guesses == 6)
+			shapeScore7 += 1;
+		if (guesses == 7)
+			shapeScore8 += 1;
+		if (guesses == 8)
+			shapeScore9 += 1;
+		if (guesses == 9)
+			shapeScore10 += 1;
+		glutPostRedisplay();
+		break;
+	case 'w':
+		if (guesses == 0)
+			correctScore += 1;
+		if (guesses == 1)
+			correctScore2 += 1;
+		if (guesses == 2)
+			correctScore3 += 1;
+		if (guesses == 3)
+			correctScore4 += 1;
+		if (guesses == 4)
+			correctScore5 += 1;
+		if (guesses == 5)
+			correctScore6 += 1;
+		if (guesses == 6)
+			correctScore7 += 1;
+		if (guesses == 7)
+			correctScore8 += 1;
+		if (guesses == 8)
+			correctScore9 += 1;
+		if (guesses == 9)
+			correctScore10 += 1;
+		glutPostRedisplay();
+		break;
+	case 'A':
+	case 'a':
+		break;
+	case 'D':
+	case 'd':
+		break;
+	case 'G':
+	case 'g':
+		guesses += 1;
+		break;
 	case 27:
 		exit(0);
 		break;
@@ -255,6 +320,7 @@ int main(int argc, char** argv)
 	init();
 	glutDisplayFunc(display);
 	glutReshapeFunc(reshape);
+	glutKeyboardFunc(keyboard);
 	glutMainLoop();
 	return 0;
 }
