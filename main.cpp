@@ -191,7 +191,7 @@ void instructions(void)
 	glRasterPos2i(20, 440);
 	printString("W AND S TO CHANGE SHAPE");
 	glRasterPos2i(20, 420);
-	printString("'G' TO CONFIRM YOUR SHAPE");
+	printString("'G' TO CONFIRM YOUR GUESS");
 	glRasterPos2i(20, 400);
 	printString("YOU HAVE FIVE GUESSES TO GET");
 	glRasterPos2i(20, 380);
