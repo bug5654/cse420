@@ -177,56 +177,58 @@ void display(void)
 	glPushMatrix();
 	glTranslatef(300, 0, 0);
 	playarea();
+
 	//glPushMatrix();
 	glTranslatef(660, 0, 0);
 	scoreboard();
 	glPushMatrix();
 	glTranslatef(20, 450, 0);
+	int tallytranslate = -40;
 		if (guesses >= 0)
 			score((GLint)shapeScore, (GLint)correctScore);
 		if (guesses >= 1)
 		{
-			glTranslatef(0, -20, 0);
+			glTranslatef(0, tallytranslate, 0);
 			score((GLint)shapeScore2, (GLint)correctScore2);
 		}
 		if (guesses >= 2)
 		{
-			glTranslatef(0, -20, 0);
+			glTranslatef(0, tallytranslate, 0);
 			score((GLint)shapeScore3, (GLint)correctScore3);
 		}
 		if (guesses >= 3)
 		{
-			glTranslatef(0, -20, 0);
+			glTranslatef(0, tallytranslate, 0);
 			score((GLint)shapeScore4, (GLint)correctScore4);
 		}
 		if (guesses >= 4)
 		{
-			glTranslatef(0, -20, 0);
+			glTranslatef(0, tallytranslate, 0);
 			score((GLint)shapeScore5, (GLint)correctScore5);
 		}
 		if (guesses >= 5)
 		{
-			glTranslatef(0, -20, 0);
+			glTranslatef(0, tallytranslate, 0);
 			score((GLint)shapeScore6, (GLint)correctScore6);
 		}
 		if (guesses >= 6)
 		{
-			glTranslatef(0, -20, 0);
+			glTranslatef(0, tallytranslate, 0);
 			score((GLint)shapeScore7, (GLint)correctScore7);
 		}
 		if (guesses >= 7)
 		{
-			glTranslatef(0, -20, 0);
+			glTranslatef(0, tallytranslate, 0);
 			score((GLint)shapeScore8, (GLint)correctScore8);
 		}
 		if (guesses >= 8)
 		{
-			glTranslatef(0, -20, 0);
+			glTranslatef(0, tallytranslate, 0);
 			score((GLint)shapeScore9, (GLint)correctScore9);
 		}
 		if (guesses >= 9)
 		{
-			glTranslatef(0, -20, 0);
+			glTranslatef(0, tallytranslate, 0);
 			score((GLint)shapeScore10, (GLint)correctScore10);
 		}
 	glPopMatrix();
@@ -302,6 +304,7 @@ void keyboard(unsigned char key, int x, int y)
 	case 'G':
 	case 'g':
 		guesses += 1;
+		glutPostRedisplay();
 		break;
 	case 27:
 		exit(0);
