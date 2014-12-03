@@ -85,11 +85,8 @@ void makeRasterFont(void)
 
 GLuint tally;
 
-void init(void)
-{
-   loadshapes();
-	tally = glGenLists(1);
-	for(int i=0; i<guessmax;i++) {
+void resetgame() {
+   for(int i=0; i<guessmax;i++) {
 	  shapeScore[i]=0;
 	  correctScore[i]=0;
 	  for(int j=0; j<4; j++) {
@@ -100,6 +97,13 @@ void init(void)
    for(int j=0; j<4; j++) {      //init for first guess
 	     guesses[0][j]=0;
    }
+}
+
+void init(void)
+{
+   loadshapes();
+	tally = glGenLists(1);
+	resetgame();
    
    //associate colors with each shape
    colors[0][0]=1.0;
@@ -236,11 +240,16 @@ void drawshapes() {
    
    for(int i=0; i<=currguess; i++) {
       for(int j=0;j<4;j++) {
+         glPushMatrix();
          glColor3f(colors[guesses[i][j]][0],colors[guesses[i][j]][1], colors[guesses[i][j]][2]);
+         glTranslatef(0.5, 0.5, 0.5);
+         glRotatef(45,1,1,0);
+         glTranslatef(-0.5, -0.5, -0.5);
          glCallList(shapes[guesses[i][j]]);
+         glPopMatrix();
          glTranslatef(3,0,0);
       }
-      glTranslatef(-9,-2,0);  //next line
+      glTranslatef(-12,-2,0);  //next line
    }
    /*
    glColor3f(0.0,1.0,0.0);
@@ -285,8 +294,8 @@ void display(void)
 	glTranslatef(660, 0, 0);
 	scoreboard();
 	glPushMatrix();
-	glTranslatef(20, 450, 0);
-	int tallytranslate = -40;
+	glTranslatef(20, 420, 0);
+	int tallytranslate = -80;
 	   for(int j=currguess; j < (2*currguess)+1; j++) {
 	        score( (GLint)shapeScore[j-currguess], (GLint) correctScore[j-currguess]);
 	        glTranslatef(0, tallytranslate, 0);
@@ -301,8 +310,8 @@ void reshape(int w, int h)
 	glViewport(0, 0,  (GLsizei)w,  (GLsizei)h);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	//gluPerspective(65.0, (GLfloat)w / (GLfloat)h, 1.0, 20.0);
-	glOrtho(0.0, w, 0.0, h, -5.0, 5.0);
+	//gluPerspective(65.0, (GLfloat)w / (GLfloat)h, 0.0, 60.0);
+	glOrtho(0.0, w, 0.0, h, -50.0, 100.0);
 	glMatrixMode(GL_MODELVIEW);
 }
 
@@ -344,16 +353,20 @@ void keyboard(unsigned char key, int x, int y)
 	case 'G':
 	case 'g':
 		currguess += 1;
-		if (currguess>guessmax) {
+		if (currguess>=guessmax) {
 		    currguess=0;
-		 }
+		    resetgame();
+      }
+      for(int k=0;k<4;k++) {
+         guesses[currguess][k] = guesses[currguess-1][k];
+      }
 		glutPostRedisplay();
 		break;
 		
    case 'p':
-      currguess=9;
+      currguess=guessmax-1;
       
-      for(int k=0;k<10;k++) {
+      for(int k=0;k<guessmax;k++) {
          shapeScore[k]=(k+debuga)%4+1;
          correctScore[k]=(k+debuga)%4+1;
       }
