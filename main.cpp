@@ -196,6 +196,14 @@ void instructions(void)
 	printString("THE SHAPES IN THE RIGHT LOCATION");
 	glRasterPos2i(20, 360);
 	printString("GOOD LUCK");
+	if(victory==true) {
+	  glPushMatrix();
+	  glScalef(2.0,2.0,2.0);
+	  glRasterPos2i(30, 100);
+	  glColor3f(0.0,1.0,0.0);
+	  printString("YOU WIN!");
+	  glPopMatrix();
+   }
 	glFlush();
 }
 
@@ -258,6 +266,7 @@ void playarea(void)
 void drawshapes() {
    //cout << "\ndrawshapes called!\n";
    int drawshape = currguess+1;
+   int firstvictory=0;
    if(drawshape >9) { drawshape=9; }
    glPushMatrix();
    
@@ -277,7 +286,7 @@ void drawshapes() {
          glTranslatef(-0.5, -0.5, -0.5);
          glCallList(shapes[guesses[i][j]]);
          glPopMatrix();
-         if(i==currguess && j==activeshape) {
+         if(i==currguess && j==activeshape && victory==false) {
             glPushMatrix();
             glTranslatef(0.0,-2.0,0.0);
             glColor3f(0.0, 0.5, 0.75);
@@ -292,6 +301,19 @@ void drawshapes() {
          glTranslatef(3,0,0);
       }
       glTranslatef(-12,-2,0);  //next line
+      if(victory==true && firstvictory==0) {
+         glPushMatrix();
+         glTranslatef(-1.0,-1,0);
+         glColor3f(0.2,1.0,0.2);
+         glBegin(GL_QUADS);
+            glVertex3f(0.0,0.0,0.0);
+            glVertex3f(12.0,0.0,0.0);
+            glVertex3f(12.0,0.2,0.0);
+            glVertex3f(0.0,0.2,0.0);
+         glEnd();
+         firstvictory=1;
+         glPopMatrix();
+      }
    }
    /*
    glColor3f(0.0,1.0,0.0);
