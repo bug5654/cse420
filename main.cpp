@@ -199,9 +199,16 @@ void drawshapes() {
    glScalef(40.0,40.0,40.0);//setup for shapespace
 
    glCallList (shapes[1]);
-   glTranslatef(50,0,0);
+   glTranslatef(3,0,0);
    glColor3f(1.0,0.0,0.0);
    glCallList (shapes[0]);
+   
+   glColor3f(0.0,0.0,1.0);
+   glTranslatef(3,0,0);
+   glCallList(shapes[1]);
+   glColor3f(1.0,1.0,0.0);
+   glTranslatef(3,0,0);
+   glCallList(shapes[3]);
    
    glPopMatrix();
 }
