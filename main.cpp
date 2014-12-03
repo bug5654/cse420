@@ -392,6 +392,12 @@ void scoreupdate(void)
 			correctScore[currguess] += 1;
 		}
 	}
+	if(correctScore[currguess]==4) {
+      victory=true;
+      cout << "VICTORY!";
+      cout << endl;
+      
+   }
    int colorarray[4];
    colorarray[0]=0;
    colorarray[1]=0;
@@ -420,18 +426,23 @@ void scoreupdate(void)
    {
       if(colorarray[m] <= colorarrayguess[guesses[currguess][m]]) {
          shapeScore[currguess]+=colorarray[m];
+         cout << "\nadding " << colorarray[m];
       } else {
          shapeScore[currguess]+=colorarrayguess[m];
+         cout << "\nadding " << colorarrayguess[m];
       }
    }
    cout << "shapeScore: " << shapeScore[currguess];
    cout << endl;
+   
 }
 
 
 void keyboard(unsigned char key, int x, int y)
 {
-   
+   if(victory==true) {
+      exit(0);
+   }
 	switch (key) {
 	case 's':
 	case 'S':
