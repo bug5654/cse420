@@ -16,10 +16,15 @@
 #endif
 #include <stdlib.h>
 #include <string.h>
+#include <iostream>
+#include "shapes.cpp"
+
+using namespace std;
 
 static int shapeScore[10];
 static int  correctScore[10];
-static int guesses = 0;
+static int currguess = 0;
+static int debuga=0;
 
 //All the stuff for bitmaps
 GLubyte space[] =
@@ -77,6 +82,7 @@ GLuint tally;
 
 void init(void)
 {
+   loadshapes();
 	tally = glGenLists(1);
 	for(int i=0; i<10;i++) {
 	  shapeScore[i]=0;
@@ -121,7 +127,7 @@ void instructions(void)
 	glRasterPos2i(20, 440);
 	printString("'G' TO CONFRIM YOUR SHAPE");
 	glRasterPos2i(20, 420);
-	printString("YOU HAVE TEN GUESSES TO GET");
+	printString("YOU HAVE TEN currguess TO GET");
 	glRasterPos2i(20, 400);
 	printString("THE SHAPES IN THE RIGHT LOCATION");
 	glRasterPos2i(20, 380);
@@ -183,10 +189,28 @@ void playarea(void)
 	glEnd();*/
 }
 
+void drawshapes() {
+   cout << "\ndrawshapes called!\n";
+   int drawshape = currguess+1;
+   if(drawshape >9) { drawshape=9; }
+   glPushMatrix();
+   glColor3f(0.0,1.0,0.0);
+   glTranslatef(400,400,0);
+   glScalef(40.0,40.0,40.0);//setup for shapespace
+
+   glCallList (shapes[1]);
+   glTranslatef(50,0,0);
+   glColor3f(1.0,0.0,0.0);
+   glCallList (shapes[0]);
+   
+   glPopMatrix();
+}
+
 void display(void)
 {
 	glPushMatrix();
 	instructions();
+	drawshapes();
 	glPushMatrix();
 	glTranslatef(300, 0, 0);
 	playarea();
@@ -197,8 +221,8 @@ void display(void)
 	glPushMatrix();
 	glTranslatef(20, 450, 0);
 	int tallytranslate = -40;
-	   for(int j=guesses; j < (2*guesses)+1; j++) {
-	        score( (GLint)shapeScore[j-guesses], (GLint) correctScore[j-guesses]);
+	   for(int j=currguess; j < (2*currguess)+1; j++) {
+	        score( (GLint)shapeScore[j-currguess], (GLint) correctScore[j-currguess]);
 	        glTranslatef(0, tallytranslate, 0);
 	   }
 	glPopMatrix();
@@ -220,11 +244,11 @@ void keyboard(unsigned char key, int x, int y)
 {
 	switch (key) {
 	case 's':
-	   shapeScore[guesses]+=1;
+	   shapeScore[currguess]+=1;
 		glutPostRedisplay();
 		break;
 	case 'w':
-      correctScore[guesses] += 1;
+      correctScore[currguess] += 1;
 		glutPostRedisplay();
 		break;
 	case 'A':
@@ -235,12 +259,27 @@ void keyboard(unsigned char key, int x, int y)
 		break;
 	case 'G':
 	case 'g':
-		guesses += 1;
-		if (guesses>9) {
-		    guesses=0;
+		currguess += 1;
+		if (currguess>9) {
+		    currguess=0;
 		 }
 		glutPostRedisplay();
 		break;
+		
+   case 'p':
+      currguess=9;
+      
+      for(int k=0;k<10;k++) {
+         shapeScore[k]=(k+debuga)%4+1;
+         correctScore[k]=(k+debuga)%4+1;
+      }
+      debuga+=1;
+      if(debuga>3) {
+         debuga=0;
+      }
+      glutPostRedisplay();
+      break;
+      
 	case 27:
 		exit(0);
 		break;
