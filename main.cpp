@@ -194,21 +194,34 @@ void drawshapes() {
    int drawshape = currguess+1;
    if(drawshape >9) { drawshape=9; }
    glPushMatrix();
-   glColor3f(0.0,1.0,0.0);
+   
    glTranslatef(400,400,0);
    glScalef(40.0,40.0,40.0);//setup for shapespace
-
+   
+   glColor3f(0.0,1.0,0.0);
    glCallList (shapes[1]);
    glTranslatef(3,0,0);
    glColor3f(1.0,0.0,0.0);
-   glCallList (shapes[0]);
+   glCallList (shapes[2]);
+   glColor3f(0.0,0.0,1.0);
+   glTranslatef(3,0,0);
+   glCallList(shapes[3]);
+   glColor3f(1.0,1.0,0.0);
+   glTranslatef(3,0,0);
+   glCallList(shapes[0]);
    
+   glTranslatef(-9,-2,0);  //next line
+   glColor3f(0.0,1.0,0.0);
+   glCallList (shapes[3]);
+   glTranslatef(3,0,0);
+   glColor3f(1.0,0.0,0.0);
+   glCallList (shapes[0]);
    glColor3f(0.0,0.0,1.0);
    glTranslatef(3,0,0);
    glCallList(shapes[1]);
    glColor3f(1.0,1.0,0.0);
    glTranslatef(3,0,0);
-   glCallList(shapes[3]);
+   glCallList(shapes[2]);
    
    glPopMatrix();
 }
