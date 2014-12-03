@@ -514,8 +514,8 @@ void loadshapes() {
       glEnd();
    glEndList ();
       
-   shapes[3] = glGenLists (1);
-   glNewList (shapes[3], GL_COMPILE); 
+   shapes[4] = glGenLists (1);
+   glNewList (shapes[4], GL_COMPILE); 
    
    glEndList ();
 }
