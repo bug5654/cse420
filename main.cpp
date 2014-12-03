@@ -199,6 +199,24 @@ void instructions(void)
 	glFlush();
 }
 
+void victorytext(void)
+{
+	glColor3fv(0.0, 1.0, 0.0);
+	
+	glRasterPos2i(20, 0);
+	printString("VICTORY");
+	glFlush();
+}
+
+void gameover(void)
+{
+	glColor3fv(1.0, 0.0, 0.0);
+	
+	glRasterPos2i(0, 0);
+	printString("GAME OVER");
+	glFlush();
+}
+
 
 void score(GLint a, GLint b)
 {
@@ -341,6 +359,13 @@ void display(void)
 	        score( (GLint)shapeScore[j-currguess], (GLint) correctScore[j-currguess]);
 	        glTranslatef(0, tallytranslate, 0);
 	   }
+	if(victory = true)
+	{
+		glPushMatrix();
+		glTranslatef(300, -400, 0);
+		glScalef(2.0, 2.0, 2.0);
+		victorytext();
+	}
 	glPopMatrix();
 	glPopMatrix();
 	glutSwapBuffers();
