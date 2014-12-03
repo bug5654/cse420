@@ -382,6 +382,67 @@ static void init (void)
       glVertex3f (0.66, 1.0, 0.0);
       glVertex3f (0.33, 1.0, 0.0);
       glEnd ();
+      glBegin (GL_QUADS);   //frontq1
+      glVertex3f (0.0, 0.0, 1.0);
+      glVertex3f (1.0, 0.0, 1.0);
+      glVertex3f (1.0, 0.5, 1.0);
+      glVertex3f (0.0, 0.5, 1.0);
+      glEnd ();
+      glBegin (GL_QUADS);   //frontq2
+      glVertex3f (0.33, 0.5, 1.0);
+      glVertex3f (0.66, 0.5, 1.0);
+      glVertex3f (0.66, 1.0, 1.0);
+      glVertex3f (0.33, 1.0, 1.0);
+      glEnd ();
+      glBegin (GL_QUADS);   //bottom
+      glVertex3f (0.0, 0.0, 0.0);
+      glVertex3f (1.0, 0.0, 0.0);
+      glVertex3f (1.0, 0.0, 1.0);
+      glVertex3f (0.0, 0.0, 1.0);
+      glEnd ();
+      glBegin (GL_QUADS);   //rightbot
+      glVertex3f (1.0, 0.0, 0.0);
+      glVertex3f (1.0, 0.5, 0.0);
+      glVertex3f (1.0, 0.5, 1.0);
+      glVertex3f (1.0, 0.0, 1.0);
+      glEnd ();
+      glBegin (GL_QUADS);   //righttop
+      glVertex3f (1.0, 0.5, 0.0);
+      glVertex3f (1.0, 1.0, 0.0);
+      glVertex3f (1.0, 1.0, 1.0);
+      glVertex3f (1.0, 0.5, 1.0);
+      glEnd ();
+      glBegin (GL_QUADS);   //topright
+      glVertex3f (1.0, 0.5, 0.0);
+      glVertex3f (1.0, 0.5, 1.0);
+      glVertex3f (0.66, 0.5, 1.0);
+      glVertex3f (0.66, 0.5, 0.0);
+      glEnd ();
+      glBegin (GL_QUADS);   //topmid
+      glVertex3f (0.66, 1.0, 0.0);
+      glVertex3f (0.66, 1.0, 1.0);
+      glVertex3f (0.33, 1.0, 1.0);
+      glVertex3f (0.33, 1.0, 0.0);
+      glEnd ();
+      glBegin (GL_QUADS);   //topleft
+      glVertex3f (0.33, 0.5, 0.0);
+      glVertex3f (0.33, 0.5, 1.0);
+      glVertex3f (0.0, 0.5, 1.0);
+      glVertex3f (0.0, 0.5, 0.0);
+      glEnd ();
+      glBegin (GL_QUADS);   //righttop
+      glVertex3f (0.33, 0.5, 0.0);
+      glVertex3f (0.33, 1.0, 0.0);
+      glVertex3f (0.33, 1.0, 1.0);
+      glVertex3f (0.33, 0.5, 1.0);
+      glEnd ();
+      glBegin (GL_QUADS);   //rightbot
+      glVertex3f (0.0, 0.0, 0.0);
+      glVertex3f (0.0, 0.5, 0.0);
+      glVertex3f (0.0, 0.5, 1.0);
+      glVertex3f (0.0, 0.0, 1.0);
+      glEnd ();
+
    
    
    
@@ -477,12 +538,12 @@ void keyboard(unsigned char key, int x, int y)
          break;
       case 't':
          currshape-=1;
-         if(currshape<0) { currshape=2; }
+         if(currshape<0) { currshape=3; }
          glutPostRedisplay();
          break; 
       case 'T':
          currshape+=1;
-         if(currshape>2) { currshape=0; }
+         if(currshape>3) { currshape=0; }
          glutPostRedisplay();
          break;    
                
