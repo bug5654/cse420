@@ -1,4 +1,3 @@
-#include <Windows.h>
 #include <GL/GL.h>
 #include <GL/GLU.h>
 #include <GL/glut.h>
@@ -96,9 +95,26 @@ void instructions(void)
 	glFlush();
 }
 
+void score(void)
+{
+	GLfloat black[3] = { 0.0, 0.0, 0.0 };
+	glClearColor(0.5, 0.5, 0.5, 0.0);
+
+	glClear(GL_COLOR_BUFFER_BIT);
+
+	glColor3fv(black);
+
+	glRasterPos2i(20, 480);
+	printString("SHAPES");
+	glRasterPos2i(150, 480);
+	printString("CORRECT");
+	glFlush();
+}
+
 void display(void)
 {
-	instructions();
+	//instructions();
+	score();
 }
 
 void reshape(int w, int h)
