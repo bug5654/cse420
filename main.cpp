@@ -56,8 +56,21 @@ void makeRasterFont(void)
 	glEndList();
 }
 
+GLuint tally;
+
 void init(void)
 {
+	tally = glGenLists(1);
+	glNewList(tally, GL_COMPILE);
+		glColor3f(0.0, 0.0, 0.0);
+		glBegin(GL_POLYGON);
+		glVertex2f(0.0, 0.0);
+		glVertex2f(0.0, 10.0);
+		glVertex2f(3.0, 0.0);
+		glVertex2f(3.0, 10.0);
+		glEnd();
+		glTranslatef(10.0, 0.0, 0.0);
+	glEndList();
 	glClearColor(0.0, 0.0, 0.0, 0.0);
 	glShadeModel(GL_FLAT);
 	makeRasterFont();
@@ -95,7 +108,26 @@ void instructions(void)
 	glFlush();
 }
 
-void score(void)
+
+void score(int a, int b)
+{
+	
+	glPushMatrix();
+	for (int i = 0; i < a; i++)
+	{
+		glCallList(tally);
+	}
+	glTranslatef(110, 0, 0);
+	for (int i = 0; i < b; i++)
+	{
+		glCallList(tally);
+	}
+
+	glPopMatrix();
+	glFlush();
+}
+
+void scoreboard(void)
 {
 	GLfloat black[3] = { 0.0, 0.0, 0.0 };
 	glClearColor(0.5, 0.5, 0.5, 0.0);
@@ -113,8 +145,13 @@ void score(void)
 
 void display(void)
 {
+	glPushMatrix();
 	//instructions();
-	score();
+	scoreboard();
+	glPushMatrix();
+	glTranslatef(20, 450, 0);
+	score(2, 5);
+	glPopMatrix();
 }
 
 void reshape(int w, int h)
