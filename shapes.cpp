@@ -1,7 +1,6 @@
 //shapes.cpp
 
-static int shapes[4];
-static int guesses[5][4];
+static int shapes[5];
 
 void loadshapes() {
    shapes[0] = glGenLists (1);
@@ -513,8 +512,10 @@ void loadshapes() {
       glVertex3f (0.0, 0.0, 1.0);
       glVertex3f (1.0, 0.0, 1.0);
       glEnd();
+   glEndList ();
       
-   
+   shapes[3] = glGenLists (1);
+   glNewList (shapes[3], GL_COMPILE); 
    
    glEndList ();
 }

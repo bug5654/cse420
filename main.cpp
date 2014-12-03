@@ -18,13 +18,17 @@
 #include <string.h>
 #include <iostream>
 #include "shapes.cpp"
+#include "gamelogic.cpp"
 
 using namespace std;
+const int guessmax=5;
 
-static int shapeScore[10];
-static int  correctScore[10];
+static int shapeScore[guessmax];
+static int correctScore[guessmax];
 static int currguess = 0;
 static int debuga=0;
+static int guesses[guessmax][4];
+static float colors[4][3];
 
 //All the stuff for bitmaps
 GLubyte space[] =
@@ -84,10 +88,21 @@ void init(void)
 {
    loadshapes();
 	tally = glGenLists(1);
-	for(int i=0; i<10;i++) {
+	for(int i=0; i<guessmax;i++) {
 	  shapeScore[i]=0;
 	  correctScore[i]=0;
+	  for(int j=0; j<4; j++) {
+	     guesses[i][j]=4;  //blank element
+	  }
+	  
    }
+   for(int j=0; j<4; j++) {      //init for first guess
+	     guesses[0][j]=0;
+   }
+   
+   //associate colors with each shape
+   
+   
 	glNewList(tally, GL_COMPILE);
 		glColor3f(1.0, 1.0, 1.0);
 		glBegin(GL_POLYGON);
@@ -198,6 +213,9 @@ void drawshapes() {
    glTranslatef(400,400,0);
    glScalef(40.0,40.0,40.0);//setup for shapespace
    
+   
+   
+   
    glColor3f(0.0,1.0,0.0);
    glCallList (shapes[1]);
    glTranslatef(3,0,0);
@@ -221,7 +239,7 @@ void drawshapes() {
    glCallList(shapes[1]);
    glColor3f(1.0,1.0,0.0);
    glTranslatef(3,0,0);
-   glCallList(shapes[2]);
+   glCallList(shapes[4]);
    
    glPopMatrix();
 }
@@ -264,11 +282,11 @@ void keyboard(unsigned char key, int x, int y)
 {
 	switch (key) {
 	case 's':
-	   shapeScore[currguess]+=1;
+	   //shapeScore[currguess]+=1;
 		glutPostRedisplay();
 		break;
 	case 'w':
-      correctScore[currguess] += 1;
+      //correctScore[currguess] += 1;
 		glutPostRedisplay();
 		break;
 	case 'A':
@@ -280,7 +298,7 @@ void keyboard(unsigned char key, int x, int y)
 	case 'G':
 	case 'g':
 		currguess += 1;
-		if (currguess>9) {
+		if (currguess>guessmax) {
 		    currguess=0;
 		 }
 		glutPostRedisplay();
