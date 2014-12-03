@@ -1,10 +1,10 @@
 //gamelogic.cpp
 
-int guesses[5][4];
-int answer[4];
-int shapeScore[5];
-int correctScore[5];
-int currguess = 0;
+extern int guesses[5][4];
+extern int answer[4];
+extern int shapeScore[5];
+extern int correctScore[5];
+extern int currguess;
 
 void scoreupdate(void)
 {

@@ -18,7 +18,9 @@
 #include <string.h>
 #include <iostream>
 #include "shapes.cpp"
-#include "gamelogic.cpp"
+#include <math.h>
+
+
 
 using namespace std;
 const int guessmax=5;
@@ -30,6 +32,8 @@ static int debuga=0;
 static int guesses[guessmax][4];
 static float colors[5][3];
 static int activeshape = 0;
+static int answer[4];
+#include "gamelogic.cpp"
 
 //All the stuff for bitmaps
 GLubyte space[] =
@@ -97,6 +101,11 @@ void resetgame() {
    for(int j=0; j<4; j++) {      //init for first guess
 	     guesses[0][j]=0;
    }
+   for(int q=0;q<4;q++) {
+      answer[q] = floor(rand()%4);
+      cout << "answer[" << q << "]: " << answer[q];
+   }
+   
 }
 
 void init(void)
@@ -352,6 +361,7 @@ void keyboard(unsigned char key, int x, int y)
 		break;
 	case 'G':
 	case 'g':
+	   scoreupdate();
 		currguess += 1;
 		if (currguess>=guessmax) {
 		    currguess=0;
