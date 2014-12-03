@@ -18,9 +18,15 @@ static int pyramid;
 static int cube;
 static int guesses[5][4];
 static int spin;
+static int spiny;
+static int currshape;
 
 static void init (void)
 {
+   glClearColor(1.0,1.0,1.0,0.0);
+   currshape=0;
+   spin=0;
+   spiny=0;
    //cout << "is any of my code doing anything?";  //use make clean....
    shapes[0] = glGenLists (1);
    //pyramid = glGenLists (1);
@@ -51,10 +57,50 @@ static void init (void)
       glVertex3f (1.0, 0.0, 1.0);
       glVertex3f (1.0, 0.0, 0.0);
       glEnd ();
+      
+      //lines
+      glLineWidth(0.5);
+      glColor3f(0.0,0.0,0.0);
+      //front face
+      glBegin(GL_LINES);
+      glVertex3f (0.0, 0.0, 0.0);
+      glVertex3f (1.0, 0.0, 0.0);
+      glEnd();
+      glBegin(GL_LINES);
+      glVertex3f (0.0, 0.0, 0.0);
+      glVertex3f (0.5, 1.0, 0.5);
+      glEnd();
+      glBegin(GL_LINES);
+      glVertex3f (1.0, 0.0, 0.0);
+      glVertex3f (0.5, 1.0, 0.5);
+      glEnd();
+      //left face
+      glBegin(GL_LINES);
+      glVertex3f (0.0, 0.0, 0.0);
+      glVertex3f (0.0, 0.0, 1.0);
+      glEnd();
+      glBegin(GL_LINES);
+      glVertex3f (0.0, 0.0, 1.0);
+      glVertex3f (0.5, 1.0, 0.5);
+      glEnd();
+      //back face
+      glBegin(GL_LINES);
+      glVertex3f (0.0, 0.0, 1.0);
+      glVertex3f (1.0, 0.0, 1.0);
+      glEnd();
+      glBegin(GL_LINES);
+      glVertex3f (1.0, 0.0, 1.0);
+      glVertex3f (0.5, 1.0, 0.5);
+      glEnd();
+      //last one
+      glBegin(GL_LINES);
+      glVertex3f (1.0, 0.0, 0.0);
+      glVertex3f (1.0, 0.0, 1.0);
+      glEnd();
    glEndList ();
-   //shapes[1] = glGenLists (1);
-   /*
-   cube = glGenLists (1);
+   shapes[1] = glGenLists (1);
+   
+   //cube = glGenLists (1);
    glNewList (shapes[1], GL_COMPILE); //cube
       glBegin (GL_POLYGON);   //bottom
       glVertex3f (0.0, 0.0, 0.0);
@@ -91,8 +137,67 @@ static void init (void)
       glVertex3f (1.0, 0.0, 0.0);
       glVertex3f (1.0, 1.0, 0.0);
       glVertex3f (0.0, 1.0, 0.0);
-      glEnd ();*/
-   glShadeModel (GL_FLAT);
+      glEnd ();
+      
+      //lines
+      glLineWidth(0.5);
+      glColor3f(0.0,0.0,0.0);
+      //front face
+      glBegin(GL_LINES);
+      glVertex3f (0.0, 0.0, 0.0);
+      glVertex3f (1.0, 0.0, 0.0);
+      glEnd();
+      glBegin(GL_LINES);
+      glVertex3f (1.0, 0.0, 0.0);
+      glVertex3f (1.0, 1.0, 0.0);
+      glEnd();
+      glBegin(GL_LINES);
+      glVertex3f (0.0, 1.0, 0.0);
+      glVertex3f (1.0, 1.0, 0.0);
+      glEnd();
+      glBegin(GL_LINES);
+      glVertex3f (0.0, 0.0, 0.0);
+      glVertex3f (0.0, 1.0, 0.0);
+      glEnd();
+      //right
+      glBegin(GL_LINES);
+      glVertex3f (1.0, 0.0, 0.0);
+      glVertex3f (1.0, 0.0, 1.0);
+      glEnd();
+      glBegin(GL_LINES);
+      glVertex3f (1.0, 1.0, 1.0);
+      glVertex3f (1.0, 0.0, 1.0);
+      glEnd();
+      glBegin(GL_LINES);
+      glVertex3f (1.0, 1.0, 1.0);
+      glVertex3f (1.0, 1.0, 0.0);
+      glEnd();
+      //top
+      glBegin(GL_LINES);
+      glVertex3f (1.0, 1.0, 1.0);
+      glVertex3f (0.0, 1.0, 1.0);
+      glEnd();
+      glBegin(GL_LINES);
+      glVertex3f (0.0, 1.0, 1.0);
+      glVertex3f (0.0, 1.0, 0.0);
+      glEnd();
+      //left
+      glBegin(GL_LINES);
+      glVertex3f (0.0, 0.0, 0.0);
+      glVertex3f (0.0, 0.0, 1.0);
+      glEnd();
+      //last
+      glBegin(GL_LINES);
+      glVertex3f (0.0, 0.0, 1.0);
+      glVertex3f (1.0, 0.0, 1.0);
+      glEnd();
+      glBegin(GL_LINES);
+      glVertex3f (0.0, 0.0, 1.0);
+      glVertex3f (0.0, 1.0, 1.0);
+      glEnd();
+      
+   glEndList ();
+   glShadeModel (GL_SMOOTH);
 }
 
 
@@ -101,16 +206,19 @@ void display(void)
 {
    GLuint i;
    
+   
    glClear (GL_COLOR_BUFFER_BIT);
    glColor3f (0.0, 1.0, 0.0);  /*  current color green  */
    glPushMatrix();
    gluLookAt(0.0,0.0,-5.0,0.0,0.0,0.0,0.0,1.0,0.0);
    glPopMatrix();
-   glRotatef(spin,0.0,0.0,0.0);
+   glPushMatrix();
+   glRotatef(spin,0.5,0.5,0.5);
+   glRotatef(spiny,0.0,1.0,0.0);
    //for (i = 0; i < 4; i++) {
-      glCallList (shapes[0]);
+      glCallList (shapes[currshape]);
    //}
-   
+   glPopMatrix();
    
    glFlush ();
 }
@@ -162,7 +270,27 @@ void keyboard(unsigned char key, int x, int y)
          spin=spin%360;
          glutPostRedisplay();
          break;
-      
+      case 'e':
+         spiny+=5;
+         spiny=spiny%360;
+         glutPostRedisplay();
+         break;
+      case 'E':
+         spiny-=5;
+         spiny=spiny%360;
+         glutPostRedisplay();
+         break;
+      case 't':
+         currshape-=1;
+         if(currshape<0) { currshape=1; }
+         glutPostRedisplay();
+         break; 
+      case 'T':
+         currshape+=1;
+         if(currshape>1) { currshape=0; }
+         glutPostRedisplay();
+         break;    
+               
    
       case 27:
          exit(0);
