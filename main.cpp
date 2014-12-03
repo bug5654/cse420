@@ -33,7 +33,8 @@ static int guesses[guessmax][4];
 static float colors[5][3];
 static int activeshape = 0;
 static int answer[4];
-#include "gamelogic.cpp"
+static int rotate_amt=0;
+
 
 //All the stuff for bitmaps
 GLubyte space[] =
@@ -134,6 +135,9 @@ void init(void)
    colors[4][0]=1.0;
    colors[4][1]=1.0;
    colors[4][2]=1.0;
+   for(int u=0;u<currguess;u++) {
+      correctScore[u]=0;
+   }
    
    
 	glNewList(tally, GL_COMPILE);
@@ -190,6 +194,7 @@ void score(GLint a, GLint b)
 {
 	
 	glPushMatrix();
+	glTranslatef(20.0,0.0,0.0);
 	int maxa = a;
 	int maxb = b;
 	if (a>4) { maxa=4; }
@@ -255,9 +260,24 @@ void drawshapes() {
          glColor3f(colors[guesses[i][j]][0],colors[guesses[i][j]][1], colors[guesses[i][j]][2]);
          glTranslatef(0.5, 0.5, 0.5);
          glRotatef(45,1,1,0);
+         if(i==currguess && j==activeshape) {
+            glRotatef(rotate_amt,1,1,0);
+         }
          glTranslatef(-0.5, -0.5, -0.5);
          glCallList(shapes[guesses[i][j]]);
          glPopMatrix();
+         if(i==currguess && j==activeshape) {
+            glPushMatrix();
+            glTranslatef(0.0,-2.0,0.0);
+            glColor3f(0.0, 0.5, 0.75);
+            glBegin(GL_QUADS);
+               glVertex3f(0.0,0.0,0.0);
+               glVertex3f(1.0,0.0,0.0);
+               glVertex3f(1.0,0.2,0.0);
+               glVertex3f(0.0,0.2,0.0);
+            glEnd();
+            glPopMatrix();
+         }
          glTranslatef(3,0,0);
       }
       glTranslatef(-12,-2,0);  //next line
@@ -326,6 +346,48 @@ void reshape(int w, int h)
 	glMatrixMode(GL_MODELVIEW);
 }
 
+
+void scoreupdate(void)
+{
+	for (int i = 0; i < 4; i++)
+	{
+		if (guesses[currguess][i] == answer[i])
+		{
+			correctScore[currguess] += 1;
+		}
+	}
+   int colorarray[4];
+   colorarray[0]=0;
+   colorarray[1]=0;
+   colorarray[2]=0;
+   colorarray[3]=0;
+   
+   int colorarrayguess[4];
+   colorarrayguess[0]=0;
+   colorarrayguess[1]=0;
+   colorarrayguess[2]=0;
+   colorarrayguess[3]=0;
+   for (int k = 0; k < 4; k++)
+   {
+      colorarray[answer[k]] += 1;
+   }
+   
+   for (int u = 0; u < 4; u++)
+   {
+      colorarrayguess[guesses[currguess][u]] += 1;
+   }
+   
+   for (int m = 0; m < 4; m++)
+   {
+      if(colorarray[m] <= colorarrayguess[guesses[currguess][m]]) {
+         shapeScore[currguess]+=colorarray[m];
+      } else {
+         shapeScore[currguess]+=colorarrayguess[m];
+      }
+   }
+}
+
+
 void keyboard(unsigned char key, int x, int y)
 {
 	switch (key) {
@@ -366,6 +428,8 @@ void keyboard(unsigned char key, int x, int y)
 	   scoreupdate();
 		currguess += 1;
 		if (currguess>=guessmax) {
+		    exit(0);
+		    break;
 		    currguess=0;
 		    resetgame();
       }
