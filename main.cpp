@@ -91,6 +91,15 @@ void makeRasterFont(void)
 
 GLuint tally;
 
+
+void array_echo( int toprint[], int length, char *title) {
+   cout << endl << title;
+   for(int i=0;i<length;i++) {
+      cout << "\t" <<toprint[i];
+   }
+   cout << endl;
+}
+
 void resetgame() {
    for(int i=0; i<guessmax;i++) {
 	  shapeScore[i]=0;
@@ -105,9 +114,9 @@ void resetgame() {
    }
    for(int q=0;q<4;q++) {
       answer[q] = floor(rand()%4);
-      cout << "\nanswer[" << q << "]: " << answer[q];
+      
    }
-   
+   array_echo(answer, 4, "answer");
 }
 
 void init(void)
@@ -348,6 +357,7 @@ void reshape(int w, int h)
 }
 
 
+
 void scoreupdate(void)
 {
 	for (int i = 0; i < 4; i++)
@@ -372,12 +382,15 @@ void scoreupdate(void)
    {
       colorarray[answer[k]] += 1;
    }
+   array_echo(colorarray, 4, "colorarray");
    
    for (int u = 0; u < 4; u++)
    {
       colorarrayguess[guesses[currguess][u]] += 1;
    }
+   array_echo(colorarrayguess, 4, "colorarrayguess");
    
+   shapeScore[currguess]=0;
    for (int m = 0; m < 4; m++)
    {
       if(colorarray[m] <= colorarrayguess[guesses[currguess][m]]) {
@@ -386,6 +399,8 @@ void scoreupdate(void)
          shapeScore[currguess]+=colorarrayguess[m];
       }
    }
+   cout << "shapeScore: " << shapeScore[currguess];
+   cout << endl;
 }
 
 
