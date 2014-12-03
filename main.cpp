@@ -130,9 +130,9 @@ void score(int a, int b)
 void scoreboard(void)
 {
 	GLfloat black[3] = { 0.0, 0.0, 0.0 };
-	glClearColor(0.5, 0.5, 0.5, 0.0);
+	//glClearColor(0.5, 0.5, 0.5, 0.0);
 
-	glClear(GL_COLOR_BUFFER_BIT);
+	//glClear(GL_COLOR_BUFFER_BIT);
 
 	glColor3fv(black);
 
@@ -143,20 +143,91 @@ void scoreboard(void)
 	glFlush();
 }
 
+void drawline(void)
+{
+	glColor3f(0.0, 0.0, 0.0);
+	glBegin(GL_QUADS);
+		glVertex2f(0.0, 0.0);
+		glVertex2f(0, 500);
+		glVertex2f(650, 500);
+		glVertex2f(650, 0);
+		glEnd();
+	/*glBegin(GL_LINE);
+	glVertex2f(0.0, 0.0);
+	glVertex2f(0.0, 500.0);
+	glEnd();*/
+}
+
 void display(void)
 {
+	/*
+	int w = 800;
+	int h = 500;
+	for (int i = 0; i < 3; i++)
+	{
+		if (i == 0)
+		{
+			glViewport(0, h, w / 6, h);
+			glMatrixMode(GL_PROJECTION);
+			glLoadIdentity();
+			gluOrtho2D(0, w / 6, h, 0);
+		}
+		if (i == 1)
+		{
+			glViewport(0, h, 2*w/3, h);
+			glMatrixMode(GL_PROJECTION);
+			glLoadIdentity();
+			gluOrtho2D(0, 2 * w / 3, h, 0);
+		}
+		if (i == 2)
+		{
+			glViewport(0, h, w / 6, h);
+			glMatrixMode(GL_PROJECTION);
+			glLoadIdentity();
+			gluOrtho2D(0, w / 6, h, 0);
+		}
+
+		glMatrixMode(GL_MODELVIEW);
+		glLoadIdentity();
+		glClear(GL_DEPTH_BUFFER_BIT);
+
+		if (i == 0)
+		{
+			instructions();
+		}
+		if (i == 1)
+		{
+			
+		}
+		if (i == 2)
+		{
+			glPushMatrix();
+			scoreboard();
+			glPushMatrix();
+			glTranslatef(20, 450, 0);
+			score(2, 5);
+			glPopMatrix();
+		}
+	}
+	*/
 	glPushMatrix();
-	//instructions();
+	instructions();
+	glPushMatrix();
+	glTranslatef(300, 0, 0);
+	drawline();
+	//glPushMatrix();
+	glTranslatef(660, 0, 0);
 	scoreboard();
 	glPushMatrix();
 	glTranslatef(20, 450, 0);
 	score(2, 5);
 	glPopMatrix();
+	glPopMatrix();
 }
 
 void reshape(int w, int h)
 {
-	glViewport(0, 0, (GLsizei) w, (GLsizei) h);
+	glViewport(0, 0,  (GLsizei)w,  (GLsizei)h);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	//gluPerspective(65.0, (GLfloat)w / (GLfloat)h, 1.0, 20.0);
@@ -179,7 +250,7 @@ int main(int argc, char** argv)
 {
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
-	glutInitWindowSize(500, 500);
+	glutInitWindowSize(1200, 500);
 	glutCreateWindow(argv[0]);
 	init();
 	glutDisplayFunc(display);
