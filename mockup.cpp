@@ -370,7 +370,22 @@ static void init (void)
    shapes[3] = glGenLists (1);
    glNewList (shapes[3], GL_COMPILE); //T-Tetris
    
+      glBegin (GL_QUADS);   //frontq1
+      glVertex3f (0.0, 0.0, 0.0);
+      glVertex3f (1.0, 0.0, 0.0);
+      glVertex3f (1.0, 0.5, 0.0);
+      glVertex3f (0.0, 0.5, 0.0);
+      glEnd ();
+      glBegin (GL_QUADS);   //frontq2
+      glVertex3f (0.33, 0.5, 0.0);
+      glVertex3f (0.66, 0.5, 0.0);
+      glVertex3f (0.66, 1.0, 0.0);
+      glVertex3f (0.33, 1.0, 0.0);
+      glEnd ();
    
+   
+   
+   glEndList ();
    
    
    
@@ -391,8 +406,10 @@ void display(void)
    //gluPerspective(60,1.0,0.0,20);
    glPopMatrix();
    glPushMatrix();
-   glRotatef(spin,0.5,0.5,0.5);
+   glTranslatef(0.5,0.5,0.5);
+   glRotatef(spin,1.0,0.0,0.0);
    glRotatef(spiny,0.0,1.0,0.0);
+   glTranslatef(-0.5,-0.5,-0.5);
    //for (i = 0; i < 4; i++) {
       glCallList (shapes[currshape]);
    //}
