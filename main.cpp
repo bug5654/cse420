@@ -28,7 +28,8 @@ static int correctScore[guessmax];
 static int currguess = 0;
 static int debuga=0;
 static int guesses[guessmax][4];
-static float colors[4][3];
+static float colors[5][3];
+static int activeshape = 0;
 
 //All the stuff for bitmaps
 GLubyte space[] =
@@ -101,6 +102,25 @@ void init(void)
    }
    
    //associate colors with each shape
+   colors[0][0]=1.0;
+   colors[0][1]=0.0;
+   colors[0][2]=0.0;
+   
+   colors[1][0]=0.0;
+   colors[1][1]=1.0;
+   colors[1][2]=0.0;
+   
+   colors[2][0]=0.0;
+   colors[2][1]=0.0;
+   colors[2][2]=1.0;
+   
+   colors[3][0]=1.0;
+   colors[3][1]=1.0;
+   colors[3][2]=0.0;
+   
+   colors[4][0]=1.0;
+   colors[4][1]=1.0;
+   colors[4][2]=1.0;
    
    
 	glNewList(tally, GL_COMPILE);
@@ -214,8 +234,15 @@ void drawshapes() {
    glScalef(40.0,40.0,40.0);//setup for shapespace
    
    
-   
-   
+   for(int i=0; i<=currguess; i++) {
+      for(int j=0;j<4;j++) {
+         glColor3f(colors[guesses[i][j]][0],colors[guesses[i][j]][1], colors[guesses[i][j]][2]);
+         glCallList(shapes[guesses[i][j]]);
+         glTranslatef(3,0,0);
+      }
+      glTranslatef(-9,-2,0);  //next line
+   }
+   /*
    glColor3f(0.0,1.0,0.0);
    glCallList (shapes[1]);
    glTranslatef(3,0,0);
@@ -240,6 +267,7 @@ void drawshapes() {
    glColor3f(1.0,1.0,0.0);
    glTranslatef(3,0,0);
    glCallList(shapes[4]);
+   */
    
    glPopMatrix();
 }
@@ -282,18 +310,36 @@ void keyboard(unsigned char key, int x, int y)
 {
 	switch (key) {
 	case 's':
-	   //shapeScore[currguess]+=1;
+	case 'S':
+	   guesses[currguess][activeshape]-=1;
+	   if (guesses[currguess][activeshape]<0) {
+	     guesses[currguess][activeshape]=3;
+	   }
 		glutPostRedisplay();
 		break;
 	case 'w':
-      //correctScore[currguess] += 1;
+	case 'W':
+      guesses[currguess][activeshape]+=1;
+	   if (guesses[currguess][activeshape]>3) {
+	     guesses[currguess][activeshape]=0;
+	   }
 		glutPostRedisplay();
 		break;
 	case 'A':
 	case 'a':
+	   activeshape-=1;
+	   if(activeshape<0) {
+	     activeshape=3;
+	   }
+	   glutPostRedisplay();
 		break;
 	case 'D':
 	case 'd':
+	   activeshape+=1;
+	   if(activeshape>3) {
+	     activeshape=0;
+	   }
+	   glutPostRedisplay();
 		break;
 	case 'G':
 	case 'g':
